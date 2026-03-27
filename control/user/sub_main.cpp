@@ -83,12 +83,12 @@ int SubMain( int argc, char** argv, RobotController* ctrl, bool with_imu ) {
 #if ( ONBOARD_BUILD == 1 )
         fprintf( stderr, "[ERROR] Can not run simulation mode on robot, exit!\n" );
 #else
-        if ( argc != 3 ) {
+        if ( argc != 3 && argc != 4 ) {
             printUsage();
             return EXIT_FAILURE;
         }
         if ( gMasterConfig.robot == RobotType::CYBERDOG || gMasterConfig.robot == RobotType::CYBERDOG2 ) {
-            SimulationBridgeInterface simulationBridge( gMasterConfig.robot, ctrl );
+            SimulationBridgeInterface simulationBridge( gMasterConfig.robot, ctrl, gMasterConfig.load_from_file );
             simulationBridge.Run();
             printf( "[Quadruped] Simulation Driver Run() has finished!\n" );
         }

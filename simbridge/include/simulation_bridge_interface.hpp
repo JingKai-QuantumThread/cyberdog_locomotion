@@ -13,7 +13,7 @@ class SimulationBridge;
  */
 class SimulationBridgeInterface {
 public:
-    explicit SimulationBridgeInterface( RobotType robot, RobotController* robot_ctrl );
+    explicit SimulationBridgeInterface( RobotType robot, RobotController* robot_ctrl, bool load_parameters_from_file = false );
     ~SimulationBridgeInterface();
 
     void Run();

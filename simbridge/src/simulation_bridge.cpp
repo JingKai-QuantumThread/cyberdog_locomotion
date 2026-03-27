@@ -8,6 +8,7 @@
 
 #include "simulation_bridge.hpp"
 #include "utilities/segfault_handler.hpp"
+#include "utilities/utilities.hpp"
 
 /**
  * @brief Connect to a simulation.
@@ -184,6 +185,20 @@ void SimulationBridge::HandleControlParameters() {
 void SimulationBridge::RunRobotControl() {
     if ( first_controller_run_ ) {
         printf( "[Simulator Driver] First run of robot controller...\n" );
+        if ( load_parameters_from_file_ ) {
+            printf( "[Simulation Driver] Loading parameters from file as fallback...\n" );
+            robot_params_->InitializeFromYamlFile( GetConfigDirectoryPath() + "robot-defaults.yaml" );
+
+            if ( user_params_ ) {
+                if ( robot_ == RobotType::CYBERDOG ) {
+                    user_params_->InitializeFromYamlFile( GetConfigDirectoryPath() + "cyberdog-ctrl-user-parameters.yaml" );
+                }
+                else if ( robot_ == RobotType::CYBERDOG2 ) {
+                    user_params_->InitializeFromYamlFile( GetConfigDirectoryPath() + "cyberdog2-ctrl-user-parameters.yaml" );
+                }
+            }
+        }
+
         if ( robot_params_->IsFullyInitialized() ) {
             printf( "\tAll %ld control parameters are initialized\n", robot_params_->collection_.map_.size() );
         }

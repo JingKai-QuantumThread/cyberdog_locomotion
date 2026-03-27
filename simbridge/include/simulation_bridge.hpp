@@ -26,9 +26,10 @@
  */
 class SimulationBridge {
 public:
-    explicit SimulationBridge( RobotType robot, RobotController* robot_ctrl )
+    explicit SimulationBridge( RobotType robot, RobotController* robot_ctrl, bool load_parameters_from_file = false )
         : robot_( robot ), lcm_( "udpm://239.255.76.67:7671?ttl=255" ), cyberdog_lcm_( "udpm://239.255.76.67:7671?ttl=255" ), motion_list_lcm_( "udpm://239.255.76.67:7671?ttl=255" ),
-          user_gait_file_lcm_( "udpm://239.255.76.67:7671?ttl=255" ), user_gait_file_responce_lcm_( "udpm://239.255.76.67:7671?ttl=255" ), motor_control_lcm_( "udpm://239.255.76.67:7667?ttl=255" ) {
+          user_gait_file_lcm_( "udpm://239.255.76.67:7671?ttl=255" ), user_gait_file_responce_lcm_( "udpm://239.255.76.67:7671?ttl=255" ), motor_control_lcm_( "udpm://239.255.76.67:7667?ttl=255" ),
+          load_parameters_from_file_( load_parameters_from_file ) {
         fake_task_manager_ = new PeriodicTaskManager();
         // robot_runner_ = new RobotRunner(robot_ctrl, fake_task_manager_, 0, "robot-task");
         robot_runner_ = new RobotRunnerInterface( robot_ctrl, fake_task_manager_, 0, "robot-task" );
@@ -57,6 +58,7 @@ private:
     void LcmMotorCtrlCallback( const lcm::ReceiveBuffer* rbuf, const std::string& chan, const motor_ctrl_lcmt* msg );
 
     bool                 first_controller_run_ = true;
+    bool                 load_parameters_from_file_ = false;
     PeriodicTaskManager* fake_task_manager_    = nullptr;
     RobotType            robot_;
     lcm::LCM             lcm_;

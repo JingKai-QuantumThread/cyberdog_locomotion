@@ -20,7 +20,7 @@ option(BUILD_HARDWARE "Build cyber dog hardware driver" ON)
 option(BUILD_CONTROL "Build cyber dog controller" ON)
 option(ONBOARD_BUILD "Use compiler flags for computer on robot" OFF)
 option(BUILD_FACTORY "Build production test tools for factory" OFF)
-option(BUILD_ROS "Build cyber dog for ROS2" OFF)
+option(BUILD_ROS "Build cyber dog for ROS2" ON)
 
 if(BUILD_CYBERDOG2)
   add_compile_definitions(BUILD_CYBERDOG2=1)
